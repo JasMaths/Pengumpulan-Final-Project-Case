@@ -7,7 +7,6 @@
 #define DOWN 80
 #define ENTER 13
 #define BACKSPACE 8
-#define HASH 9999 
 #include "models.cpp"
 #include "pantry.cpp"
 
