@@ -2,24 +2,25 @@
 struct Recipe
 {
     int steps,ingr;
-    char Name[100];
-    char Description[1005];
-    char *Instruction[20];
-    char *Ingredients[20];
+    char Name[255];
+    char Description[255];
+    char Instruction[20][255];
+    char Ingredients[20][255];
     bool bookmark;
     Recipe *next, *prev;
 } *head_Recipe, *tail_Recipe, *curr_Recipe;
 
-struct Recipe *createRecipe(char *name, char *Description,  int steps, int ingr, char **Instruction,  char **Ingredient)
+struct Recipe *createRecipe(char *name, char *Description, int steps, int ingr, char Instruction[][255],  char Ingredient[][255])
 {
     struct Recipe *temp = (Recipe *)malloc(sizeof(Recipe));
     strcpy(temp->Description, Description);
+    strcpy(temp->Name, name);
     temp->steps = steps;
     temp->ingr = ingr;
     temp->bookmark = false;
     for(int i = 0;i < steps;i++)
     {
-        strcpy(temp->Instruction[i],Instruction[i]);
+        strcpy(temp->Instruction[i],Instruction[i]); 
     }
     for(int i = 0;i < ingr;i++)
     {
@@ -62,7 +63,8 @@ void SavedRecipes()
 void SearchRecipes()
 {
     system("cls || clear");
-    char *nametemp;
+    char nametemp[255];
+    bool flag = false;
     puts("Enter name of recipe");
     scanf("%[^\n]", nametemp);
     getchar();
@@ -82,20 +84,18 @@ void SearchRecipes()
                 printf("%s\n",curr_Recipe->Ingredients[i]);
             }
             puts("Would you like to bookmark this recipe? [yes/no]");
-            char *trash;
+            char trash[5];
             scanf("%s",trash);
-            getchar();
             if(strcmp(trash,"yes")==0)
             {
                 curr_Recipe->bookmark = true;
             }
+            flag = true;
             break;
         }
-        else
-        {
-            curr_Recipe = curr_Recipe->next;
-        }
+        curr_Recipe = curr_Recipe->next;
     }
+    (flag) ? puts("") : puts("Recipe not found!");
     getchar();
     cookbook();
 }
@@ -103,38 +103,40 @@ void SearchRecipes()
 void NewRecipe()
 {
     system("cls || clear");
-    char *nametemp, *desctemp, *instrtemp[20],*ingrdtemp[20];
+    char nametemp[255], desctemp[255], instrtemp[20][255], ingrdtemp[20][255];
     int steps,ingr;
     puts("Enter name of recipe");
     scanf("%[^\n]", nametemp);
-    printf("test1\n");
     getchar();
-    printf("test2\n");
+
+
     puts("Enter recipe description");
-    printf("test3\n");
     scanf("%[^\n]", desctemp);
     getchar();
-    printf("test4\n");
+    
     puts("Enter number of instruction");
     scanf("%d", &steps);
-    getchar();
+    
     puts("Enter cooking instructions");
     for(int i = 0;i<steps;i++)
     {
-        scanf("%[^\n]",*instrtemp[i]);
-        getchar();
+    	getchar();
+        scanf("%[^\n]", instrtemp[i]);
     }
+    
     puts("Enter amount of ingredient");
     scanf("%d", &ingr);
-    getchar();
+    
     puts("Enter cooking ingredients");
     for(int i = 0;i<ingr;i++)
     {
-        scanf("%[^\n]",*ingrdtemp[i]);
-        getchar();
+    	getchar();
+        scanf("%[^\n]", ingrdtemp[i]);
     }
+    
     pushRecipe(createRecipe(nametemp, desctemp, steps, ingr, instrtemp, ingrdtemp));
     puts("Recipe has been successfully made");
+    getchar();
     getchar();
     cookbook();
 }
