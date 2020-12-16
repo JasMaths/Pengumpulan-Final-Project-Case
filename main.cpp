@@ -9,6 +9,7 @@
 #define BACKSPACE 8
 #include "models.cpp"
 #include "pantry.cpp"
+#include "cookbook.cpp"
 
 void clear(void)
 {
@@ -146,6 +147,7 @@ void mainScreen()
 		break;
 		case 2:
 		loadingMenu();
+		cookbook();
 		break;
 		case 3:
 		loadingMenu();
