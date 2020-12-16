@@ -107,9 +107,14 @@ void NewRecipe()
     int steps,ingr;
     puts("Enter name of recipe");
     scanf("%[^\n]", nametemp);
+    printf("test1\n");
     getchar();
+    printf("test2\n");
     puts("Enter recipe description");
+    printf("test3\n");
     scanf("%[^\n]", desctemp);
+    getchar();
+    printf("test4\n");
     puts("Enter number of instruction");
     scanf("%d", &steps);
     getchar();
